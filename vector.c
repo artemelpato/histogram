@@ -127,6 +127,8 @@ int main(void) {
     h = histogram_fill(h, 20.0);
     histogram_print(h);
 
+    printf("integral is %zu\n", histogram_integral(h, 0, h.nbins - 1));
+
     float params[] = {4.0f};
     h = histogram_apply(h, multiply, (FuncParams){.n = 1, .params = params});
     histogram_print(h);

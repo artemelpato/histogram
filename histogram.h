@@ -79,6 +79,46 @@ Histogram1D histogram_apply(Histogram1D h, Func f, FuncParams pars) {
     return h;
 }
 
+Histogram1D histogram_scale(Histogram1D h, float scale) {
+    for (size_t i = 0; i < h.nbins; ++i) {
+        h.sumw[i] *= scale;
+        h.sumw2[i] *= scale * scale;
+    }
+
+    return h;
+}
+
+size_t histogram_integral(Histogram1D h, size_t low_bin, size_t high_bin) {
+    size_t integral = 0;
+    for (size_t i = low_bin; i <= high_bin; ++i) {
+        integral += h.sumw[i];
+    }
+    return integral;
+}
+
+#error NOT_IMPLEMENTED
+int histogram_are_consistent(Histogram1D h1, Histogram1D h2); //TODO
+
+Histogram1D histogram_add(Histogram1D h1, Histogram1D h2, float scale) {
+#error NOT_IMPLEMENTED
+    for (size_t i = 0; i < h1.nbins; ++i) {
+        h1.sumw[i] += h2.sumw[i] * scale;
+        h1.sumw2[i] += h2.sumw2[i] * scale * scale;
+    }
+
+    return h1;
+}
+
+Histogram1D histogram_copy(Histogram1D to, Histogram1D from) {
+#error NOT_IMPLEMENTED
+    for (size_t i = 0; i < to.nbins; ++i) {
+        to.sumw[i] = from.sumw[i];
+        to.sumw2[i] = from.sumw2[i];
+    }
+
+    return to;
+}
+
 void histogram_print(Histogram1D h) {
     printf("nbins %zu from %.2f to %.2f\n", h.nbins, h.edges[0], h.edges[h.nbins]);
     
