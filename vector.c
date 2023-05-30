@@ -120,6 +120,7 @@ int main(void) {
     h = histogram_fill(h, 4.5);
     h = histogram_fill(h, 1.5);
     h = histogram_fill(h, 1.5);
+    h = histogram_fill(h, 20.0);
 
     histogram_print(h);
 

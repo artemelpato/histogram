@@ -51,6 +51,10 @@ size_t histogram_find_bin(Histogram1D h, float x) {
 
 Histogram1D histogram_fill(Histogram1D h, float x) {
     size_t i = histogram_find_bin(h, x);
+    if (i < 0 || i >= h.nbins) {
+        return h;
+    }
+
     h.sumw[i]++;
     h.sumw2[i]++;
 
