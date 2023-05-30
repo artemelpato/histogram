@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <assert.h>
 #include <string.h>
+#include "histogram.h"
 
 typedef struct {
     size_t size;
@@ -29,9 +30,6 @@ Vector vector_alloc(size_t init_cap) {
 
     return v;
 }
-
-typedef struct Histogram1D Histogram1D;
-Histogram1D histogram_add(Histogram1D h1, Histogram1D h2);
 
 Vector vector_realloc(Vector v, size_t cap) {
     v.cap = cap;
@@ -99,20 +97,33 @@ void vector_print(Vector v) {
 }
 
 int main(void) {
-    Vector v = vector_alloc(1);
-    v = vector_resize(v, 20);
-    vector_print(v);
+    /*Vector v = vector_alloc(1);*/
+    /*v = vector_resize(v, 20);*/
+    /*vector_print(v);*/
 
-    v = vector_fill_rand(v);
-    vector_print(v);
+    /*v = vector_fill_rand(v);*/
+    /*vector_print(v);*/
 
-    v = vector_append(v, 228.0f); 
-    vector_print(v);
+    /*v = vector_append(v, 228.0f); */
+    /*vector_print(v);*/
 
-    v = vector_clear(v);
-    vector_print(v);
+    /*v = vector_clear(v);*/
+    /*vector_print(v);*/
 
-    v = vector_free(v);
+    /*v = vector_free(v);*/
+
+    Histogram1D h = histogram_alloc(10, 0.0f, 10.0f); 
+    histogram_print(h);
+
+    h = histogram_fill(h, 1.5);
+    h = histogram_fill(h, 2.5);
+    h = histogram_fill(h, 4.5);
+    h = histogram_fill(h, 1.5);
+    h = histogram_fill(h, 1.5);
+
+    histogram_print(h);
+
+    h = histogram_free(h);
 
     return 0;
 }
