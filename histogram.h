@@ -37,6 +37,9 @@ Histogram1D histogram_alloc(size_t nbins, float xlow, float xhigh) {
     return h;
 }
 
+// for now just check all bins, which is ok for small
+// histograms, but maybe binary search will be better 
+// at big histograms
 size_t histogram_find_bin(Histogram1D h, float x) {
     for (size_t i = 0; i < h.nbins; ++i) {
         if (h.edges[i] <= x && x < h.edges[i + 1]) {
