@@ -13,6 +13,14 @@ struct Histogram1D {
     int* sumw2;
 };
 
+typedef struct FuncParams FuncParams;
+struct FuncParams {
+    size_t n;
+    float* params;
+};
+
+typedef float (*Func)(float, FuncParams);
+
 Histogram1D histogram_alloc(size_t nbins, float xlow, float xhigh) {
     Histogram1D h = {
         .nbins = nbins,
@@ -57,6 +65,16 @@ Histogram1D histogram_fill(Histogram1D h, float x) {
 
     h.sumw[i]++;
     h.sumw2[i]++;
+
+    return h;
+}
+
+Histogram1D histogram_apply(Histogram1D h, Func f, FuncParams pars) {
+    for (size_t i = 0; i < h.nbins; ++i) {
+        float tmp = f(h.sumw[i], pars);
+        h.sumw[i] = tmp;
+        h.sumw2[i] = 0; // currently undefined???
+    }
 
     return h;
 }

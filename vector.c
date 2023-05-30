@@ -96,6 +96,10 @@ void vector_print(Vector v) {
     printf(")\n");
 }
 
+float multiply(float x, FuncParams pars) {
+    return x * pars.params[0];
+}
+
 int main(void) {
     /*Vector v = vector_alloc(1);*/
     /*v = vector_resize(v, 20);*/
@@ -121,7 +125,10 @@ int main(void) {
     h = histogram_fill(h, 1.5);
     h = histogram_fill(h, 1.5);
     h = histogram_fill(h, 20.0);
+    histogram_print(h);
 
+    float params[] = {4.0f};
+    h = histogram_apply(h, multiply, (FuncParams){.n = 1, .params = params});
     histogram_print(h);
 
     h = histogram_free(h);
