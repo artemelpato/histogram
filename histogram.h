@@ -119,6 +119,7 @@ Err histogram_check_consistency(Histogram1D h1, Histogram1D h2) {
 
 Histogram1D histogram_add(Histogram1D h1, Histogram1D h2, float scale) {
     Err consistency = histogram_check_consistency(h1, h2);
+
     switch (consistency) {
     case HISTOGRAM_DIFF_NBINS:
         fprintf(stderr, "you can't add histograms with different number of bins!!!\n");
