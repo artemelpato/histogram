@@ -4,6 +4,8 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <float.h>
+#include <math.h>
 
 typedef struct Histogram1D Histogram1D;
 struct Histogram1D {
@@ -20,6 +22,13 @@ struct FuncParams {
 };
 
 typedef float (*Func)(float, FuncParams);
+
+enum Err {
+    HISTOGRAM_DIFF_NBINS,
+    HISTOGRAM_DIFF_BINS,
+    HISTOGRAM_CONSISTENT
+};
+typedef enum Err Err;
 
 Histogram1D histogram_alloc(size_t nbins, float xlow, float xhigh) {
     Histogram1D h = {
@@ -96,11 +105,35 @@ size_t histogram_integral(Histogram1D h, size_t low_bin, size_t high_bin) {
     return integral;
 }
 
-#error NOT_IMPLEMENTED
-int histogram_are_consistent(Histogram1D h1, Histogram1D h2); //TODO
+Err histogram_check_consistency(Histogram1D h1, Histogram1D h2) { 
+    if (h1.nbins != h2.nbins) 
+        return HISTOGRAM_DIFF_NBINS;
+
+    for (size_t i = 0; i < h1.nbins + 1; ++i) {
+        if (fabs(h1.edges[i] - h2.edges[i]) >= FLT_EPSILON)
+            return HISTOGRAM_DIFF_BINS;
+    }
+
+    return HISTOGRAM_CONSISTENT;
+}
 
 Histogram1D histogram_add(Histogram1D h1, Histogram1D h2, float scale) {
-#error NOT_IMPLEMENTED
+    Err consistency = histogram_check_consistency(h1, h2);
+    switch (consistency) {
+    case HISTOGRAM_DIFF_NBINS:
+        fprintf(stderr, "you can't add histograms with different number of bins!!!\n");
+        exit(-1);
+        break;
+
+    case HISTOGRAM_DIFF_BINS:
+        fprintf(stderr, "you can't add histograms with different bin edges!!!\n");
+        exit(-1);
+        break;
+
+    case HISTOGRAM_CONSISTENT:
+        break;
+    }
+    
     for (size_t i = 0; i < h1.nbins; ++i) {
         h1.sumw[i] += h2.sumw[i] * scale;
         h1.sumw2[i] += h2.sumw2[i] * scale * scale;
@@ -110,7 +143,22 @@ Histogram1D histogram_add(Histogram1D h1, Histogram1D h2, float scale) {
 }
 
 Histogram1D histogram_copy(Histogram1D to, Histogram1D from) {
-#error NOT_IMPLEMENTED
+    Err consistency = histogram_check_consistency(to, from);
+    switch (consistency) {
+    case HISTOGRAM_DIFF_NBINS:
+        fprintf(stderr, "you can't copy histograms with different number of bins!!!\n");
+        exit(-1);
+        break;
+
+    case HISTOGRAM_DIFF_BINS:
+        fprintf(stderr, "you can't copy histograms with different bin edges!!!\n");
+        exit(-1);
+        break;
+
+    case HISTOGRAM_CONSISTENT:
+        break;
+    }
+
     for (size_t i = 0; i < to.nbins; ++i) {
         to.sumw[i] = from.sumw[i];
         to.sumw2[i] = from.sumw2[i];

@@ -133,6 +133,11 @@ int main(void) {
     h = histogram_apply(h, multiply, (FuncParams){.n = 1, .params = params});
     histogram_print(h);
 
+    Histogram1D g = histogram_alloc(10, 0.0f, 10.0f);
+    g = histogram_add(g, h, 3);
+    histogram_print(g);
+    printf("integral is %zu\n", histogram_integral(g, 0, g.nbins - 1));
+
     h = histogram_free(h);
 
     return 0;
