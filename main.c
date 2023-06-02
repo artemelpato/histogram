@@ -11,20 +11,20 @@ float multiply(float x, FuncParams pars) {
 }
 
 int main(void) {
-    /*Vector v = vector_alloc(1);*/
-    /*v = vector_resize(v, 20);*/
-    /*vector_print(v);*/
+    Vector v = vector_alloc(1);
+    v = vector_resize(v, 20);
+    vector_print(v);
 
-    /*v = vector_fill_rand(v);*/
-    /*vector_print(v);*/
+    v = vector_fill_rand(v);
+    vector_print(v);
 
-    /*v = vector_append(v, 228.0f); */
-    /*vector_print(v);*/
+    v = vector_append(v, 228.0f); 
+    vector_print(v);
 
-    /*v = vector_clear(v);*/
-    /*vector_print(v);*/
+    v = vector_clear(v);
+    vector_print(v);
 
-    /*v = vector_free(v);*/
+    v = vector_free(v);
 
     Histogram1D h = histogram_alloc(10, 0.0f, 10.0f); 
     histogram_print(h);
