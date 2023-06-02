@@ -1,12 +1,12 @@
 CC=clang
-CFLAGS=-Wall -Wextra -Werror -pedantic -g 
+CFLAGS=-Wall -Wextra -Werror -pedantic -g -I.
 EXE=run
 
 .PHONY.: clean all
 
-all: vector
+all: run
 
-vector: vector.c
+run: main.c
 	$(CC) $(CFLAGS) -o $@ $^
 
 clean:

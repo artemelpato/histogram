@@ -66,7 +66,7 @@ size_t histogram_find_bin(Histogram1D h, float x) {
     return -1;
 }
 
-Histogram1D histogram_fill(Histogram1D h, float x) {
+void histogram_fill(Histogram1D h, float x) {
     size_t i = histogram_find_bin(h, x);
     if (i < 0 || i >= h.nbins) {
         return h;
@@ -75,26 +75,26 @@ Histogram1D histogram_fill(Histogram1D h, float x) {
     h.sumw[i]++;
     h.sumw2[i]++;
 
-    return h;
+    return;
 }
 
-Histogram1D histogram_apply(Histogram1D h, Func f, FuncParams pars) {
+void histogram_apply(Histogram1D h, Func f, FuncParams pars) {
     for (size_t i = 0; i < h.nbins; ++i) {
         float tmp = f(h.sumw[i], pars);
         h.sumw[i] = tmp;
         h.sumw2[i] = 0; // currently undefined???
     }
 
-    return h;
+    return;
 }
 
-Histogram1D histogram_scale(Histogram1D h, float scale) {
+void histogram_scale(Histogram1D h, float scale) {
     for (size_t i = 0; i < h.nbins; ++i) {
         h.sumw[i] *= scale;
         h.sumw2[i] *= scale * scale;
     }
 
-    return h;
+    return;
 }
 
 size_t histogram_integral(Histogram1D h, size_t low_bin, size_t high_bin) {
@@ -117,7 +117,7 @@ Err histogram_check_consistency(Histogram1D h1, Histogram1D h2) {
     return HISTOGRAM_CONSISTENT;
 }
 
-Histogram1D histogram_add(Histogram1D h1, Histogram1D h2, float scale) {
+void histogram_add(Histogram1D h1, Histogram1D h2, float scale) {
     Err consistency = histogram_check_consistency(h1, h2);
 
     switch (consistency) {
@@ -140,10 +140,10 @@ Histogram1D histogram_add(Histogram1D h1, Histogram1D h2, float scale) {
         h1.sumw2[i] += h2.sumw2[i] * scale * scale;
     }
 
-    return h1;
+    return;
 }
 
-Histogram1D histogram_copy(Histogram1D to, Histogram1D from) {
+void histogram_copy(Histogram1D to, Histogram1D from) {
     Err consistency = histogram_check_consistency(to, from);
     switch (consistency) {
     case HISTOGRAM_DIFF_NBINS:
@@ -165,7 +165,7 @@ Histogram1D histogram_copy(Histogram1D to, Histogram1D from) {
         to.sumw2[i] = from.sumw2[i];
     }
 
-    return to;
+    return;
 }
 
 void histogram_print(Histogram1D h) {
