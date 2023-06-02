@@ -1,12 +1,6 @@
 #ifndef __HISTOGRAM_H__
 #define __HISTOGRAM_H__
 
-#include <stddef.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <float.h>
-#include <math.h>
-
 typedef struct Histogram1D Histogram1D;
 struct Histogram1D {
     size_t nbins;
@@ -69,7 +63,7 @@ size_t histogram_find_bin(Histogram1D h, float x) {
 void histogram_fill(Histogram1D h, float x) {
     size_t i = histogram_find_bin(h, x);
     if (i < 0 || i >= h.nbins) {
-        return h;
+        return;
     }
 
     h.sumw[i]++;

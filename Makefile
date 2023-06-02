@@ -4,10 +4,10 @@ EXE=run
 
 .PHONY.: clean all
 
-all: run
+all: $(EXE)
 
-run: main.c
+$(EXE): main.c
 	$(CC) $(CFLAGS) -o $@ $^
 
 clean:
-	rm -fv vector
+	rm -fv $(EXE)
