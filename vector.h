@@ -1,6 +1,10 @@
 #ifndef __VECTOR_H__
 #define __VECTOR_H__
 
+#include <stdlib.h>
+#include <stdio.h>
+#include <stddef.h>
+
 typedef struct {
     size_t size;
     size_t cap;

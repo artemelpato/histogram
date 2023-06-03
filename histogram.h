@@ -1,6 +1,12 @@
 #ifndef __HISTOGRAM_H__
 #define __HISTOGRAM_H__
 
+#include <stdlib.h>
+#include <stddef.h>
+#include <stdio.h>
+#include <float.h>
+#include <math.h>
+
 typedef struct Histogram1D Histogram1D;
 struct Histogram1D {
     size_t nbins;
