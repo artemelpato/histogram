@@ -1,8 +1,9 @@
 export
 
-CC = clang
+CC = tcc
 INCLUDE = $(shell realpath include)
 CFLAGS = -Wall -Wextra -Werror -pedantic -g -I$(INCLUDE) -O2
+LDFLAGS = -lm
 BUILDDIR = $(shell realpath build)
 EXE = $(BUILDDIR)/run
 
