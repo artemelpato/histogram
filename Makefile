@@ -1,5 +1,5 @@
 CC=clang
-CFLAGS=-Wall -Wextra -Werror -pedantic -g -I.
+CFLAGS=-Wall -Wextra -Werror -pedantic -g -I. -O2
 EXE=run
 
 .PHONY.: clean all
