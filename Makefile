@@ -1,13 +1,16 @@
-CC=clang
-CFLAGS=-Wall -Wextra -Werror -pedantic -g -I. -O2
-EXE=run
+export
+
+CC = clang
+INCLUDE = $(shell realpath include)
+CFLAGS = -Wall -Wextra -Werror -pedantic -g -I$(INCLUDE) -O2
+BUILDDIR = $(shell realpath build)
+EXE = $(BUILDDIR)/run
 
 .PHONY.: clean all
 
-all: $(EXE)
-
-$(EXE): main.c histogram.h vector.h histogram.c
-	$(CC) $(CFLAGS) -o $@ main.c histogram.c
+all:
+	$(MAKE) -C src --no-print-directory
+	$(CC) $(LDFLAGS) $(BUILDDIR)/*.o -o $(EXE)
 
 clean:
-	rm -fv $(EXE)
+	@rm -fv $(BUILDDIR)/*
