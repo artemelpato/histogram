@@ -6,8 +6,8 @@ EXE=run
 
 all: $(EXE)
 
-$(EXE): main.c histogram.h vector.h
-	$(CC) $(CFLAGS) -o $@ $<
+$(EXE): main.c histogram.h vector.h histogram.c
+	$(CC) $(CFLAGS) -o $@ main.c histogram.c
 
 clean:
 	rm -fv $(EXE)
