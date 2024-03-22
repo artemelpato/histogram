@@ -25,19 +25,12 @@ typedef struct Histogram1D_s {
 #define HISTOGRAM_FUNC_MAX_PARAMS 10
 
 /**
- * Parameters of the function, that can be applied to histogram
- */
-typedef struct Histogram1DFuncParams_s {
-    size_t n;
-    float params[HISTOGRAM_FUNC_MAX_PARAMS];
-} Histogram1DFuncParams;
-
-/**
  * Function, that can be applied to histogram
  */
 typedef struct Histogram1DFunc_s {
-    float (*f)(float x, Histogram1DFuncParams params); 
-    Histogram1DFuncParams params;
+    float (*f)(float x, float* params); 
+    size_t n;
+    float params[HISTOGRAM_FUNC_MAX_PARAMS];
 } Histogram1DFunc;
 
 /**

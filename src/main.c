@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include "histogram.h"
 
-float multiply(float x, Histogram1DFuncParams pars) {
-    return x * pars.params[0];
+float multiply(float x, float* pars) {
+    return x * pars[0];
 }
 
 int main(void) {
@@ -22,10 +22,8 @@ int main(void) {
 
     Histogram1DFunc f = {
         .f = multiply, 
-        .params = {
-            .n = 1,
-            .params = {4.0f}
-        }
+        .n = 1,
+        .params = {4.0f}
     };
     Histogram1D__apply(&h, f);
     Histogram1D__print(&h);
