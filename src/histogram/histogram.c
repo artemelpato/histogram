@@ -59,9 +59,9 @@ void Histogram1D__fill(Histogram1D* h, float x) {
     return;
 }
 
-void Histogram1D__apply(Histogram1D* h, Func f, FuncParams pars) {
+void Histogram1D__apply(Histogram1D* h, Histogram1DFunc f) {
     for (size_t i = 0; i < h->nbins; ++i) {
-        float tmp = f(h->sumw[i], pars);
+        float tmp = f.f(h->sumw[i], f.params);
         h->sumw[i] = tmp;
         h->sumw2[i] = 0; // currently undefined
     }

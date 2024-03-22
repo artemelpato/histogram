@@ -20,17 +20,25 @@ typedef struct Histogram1D_s {
 } Histogram1D;
 
 /**
- * Func parameters for Histogram1D__apply
+ * Max number of parameters of applicable function
  */
-typedef struct FuncParams_s {
-    size_t n;
-    float* params;
-} FuncParams;
+#define HISTOGRAM_FUNC_MAX_PARAMS 10
 
 /**
- * Function with FuncParams type
+ * Parameters of the function, that can be applied to histogram
  */
-typedef float (*Func)(float, FuncParams);
+typedef struct Histogram1DFuncParams_s {
+    size_t n;
+    float params[HISTOGRAM_FUNC_MAX_PARAMS];
+} Histogram1DFuncParams;
+
+/**
+ * Function, that can be applied to histogram
+ */
+typedef struct Histogram1DFunc_s {
+    float (*f)(float x, Histogram1DFuncParams params); 
+    Histogram1DFuncParams params;
+} Histogram1DFunc;
 
 /**
  * Enum for histogram consistency check
@@ -65,7 +73,7 @@ void Histogram1D__fill(Histogram1D* h, float x);
  * Apply function of type \ref Func to histogram 
  * with parameters \ref of type FuncParams
  */
-void Histogram1D__apply(Histogram1D* h, Func f, FuncParams pars);
+void Histogram1D__apply(Histogram1D* h, Histogram1DFunc);
 
 /**
  * Scale histogram by a scalar

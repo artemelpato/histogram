@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "histogram.h"
 
-float multiply(float x, FuncParams pars) {
+float multiply(float x, Histogram1DFuncParams pars) {
     return x * pars.params[0];
 }
 
@@ -20,8 +20,14 @@ int main(void) {
 
     printf("integral is %zu\n", Histogram1D__integral(&h, 0, h.nbins - 1));
 
-    float params[] = {4.0f};
-    Histogram1D__apply(&h, multiply, (FuncParams){.n = 1, .params = params});
+    Histogram1DFunc f = {
+        .f = multiply, 
+        .params = {
+            .n = 1,
+            .params = {4.0f}
+        }
+    };
+    Histogram1D__apply(&h, f);
     Histogram1D__print(&h);
 
     Histogram1D g;
