@@ -20,12 +20,12 @@ int main(void) {
 
     printf("integral is %zu\n", Histogram1D__integral(&h, 0, h.nbins - 1));
 
-    Histogram1DFunc f = {
-        .f = multiply, 
-        .n = 1,
-        .params = {4.0f}
-    };
-    Histogram1D__apply(&h, f);
+    Histogram1DFunc func;
+    func.f = multiply;
+    func.n = 1;
+    func.params[0] = 4.0f;
+
+    Histogram1D__apply(&h, func);
     Histogram1D__print(&h);
 
     Histogram1D g;
